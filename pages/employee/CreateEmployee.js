@@ -45,21 +45,21 @@ function CreateEmployee()  {
                 <TextField id="outlined-basic"
                  label="Employee name" 
                  variant="outlined" 
-                 className="employee_name" 
+                 className="name" 
                  value={newEmployee.name} 
                  onChange={e => Handle(e)}/>
 
                 <TextField id="outlined-basic" 
                 label="Employee salary" 
                 variant="outlined"
-                className="employee_salary" 
+                className="salary" 
                 value={newEmployee.salary} 
                 onChange={e => Handle(e)}/>
 
                 <TextField id="outlined-basic" 
                 label="Employee age" 
                 variant="outlined" 
-                className="employee_age" 
+                className="age" 
                 value={newEmployee.age} 
                 onChange={e => Handle(e)}/>
 
