@@ -33,7 +33,7 @@ function CreateEmployee()  {
         e.preventDefault();
         axios.post(`http://dummy.restapiexample.com/api/v1/create`, {newEmployee})
         .then(res => {
-            console.log(res.data)
+            console.log(res.data.data)
         })
     }
    
@@ -42,28 +42,25 @@ function CreateEmployee()  {
         <div>
              <form className={classes.root} noValidate autoComplete="off" onSubmit={e => Submit(e)}>
 
-                <TextField id="outlined-basic"
-                 label="Employee name" 
-                 variant="outlined" 
+                <input
+                 label="outlined" 
                  className="name" 
                  value={newEmployee.name} 
                  onChange={e => Handle(e)}/>
 
-                <TextField id="outlined-basic" 
+                <input  
                 label="Employee salary" 
-                variant="outlined"
                 className="salary" 
                 value={newEmployee.salary} 
                 onChange={e => Handle(e)}/>
 
-                <TextField id="outlined-basic" 
+                <input 
                 label="Employee age" 
-                variant="outlined" 
                 className="age" 
                 value={newEmployee.age} 
                 onChange={e => Handle(e)}/>
 
-               <Button variant="contained" color="primary" >Create</Button >
+               <button>Create</button>
             </form>
             
         </div>
