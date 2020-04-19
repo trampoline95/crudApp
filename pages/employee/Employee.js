@@ -20,7 +20,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import DeleteEmployee from './DeleteEmployee';
+
 
 
 const useStyles = makeStyles( {
@@ -43,19 +43,15 @@ export default function Employee(){
     const [employee_name, setEmployee_name] = useState("")
     const [employee_salary, setEmployee_salary] = useState("")
     const [employee_age, setEmployee_age] = useState("")
-    const [newEmployee, setNewEmployee] = useState({
-        employee_name: "",
-        employee_salary: "",
-        employee_age: ""
-    })  
+     
 
   
-    const handleDelete = (employeeId) => {
-        axios.delete(`http://dummy.restapiexample.com/api/v1/delete/${employeeId}`)
+    const handleDelete = (id) => {
+        axios.delete(`http://dummy.restapiexample.com/api/v1/delete/${id}`)
         .then(res => {
+            employeeList.splice(id, 1) 
+            setEmployeeList([...employeeList])
             console.log(res.data.data)
-            
-        
     })
     }
     
