@@ -17,21 +17,17 @@ const useStyles = makeStyles((theme) => ({
 function CreateEmployee()  {
     const classes = useStyles();
 
-    const[newEmployee, setEmployee] = useState({
-        name: "",
-        salary: "",
-        age: ""
-    })
-    
-    const Handle = (e) => {
-        const newCreatedEmployee = {...newEmployee}
-        newCreatedEmployee[e.target.className] = e.target.value
-        setEmployee(newCreatedEmployee)
-    }
+  
 
+    const [employee_name, setEmployee_name] = useState("")
+    const [employee_salary, setEmployee_salary] = useState("")
+    const [employee_age, setEmployee_age] = useState("")
+    
+   
+       
     const Submit = (e) => {
         e.preventDefault();
-        axios.post(`http://dummy.restapiexample.com/api/v1/create`, {newEmployee})
+        axios.post(`http://dummy.restapiexample.com/api/v1/create`, {name: employee_name, salary: employee_salary, age: employee_age})
         .then(res => {
             console.log(res.data.data)
         })
@@ -45,20 +41,20 @@ function CreateEmployee()  {
                 <input
                  label="outlined" 
                  className="name" 
-                 value={newEmployee.name} 
-                 onChange={e => Handle(e)}/>
+                 value={employee_name} 
+                 onChange={e => setEmployee_name(e.target.value)}/>
 
                 <input  
                 label="Employee salary" 
                 className="salary" 
-                value={newEmployee.salary} 
-                onChange={e => Handle(e)}/>
+                value={employee_salary} 
+                onChange={e => setEmployee_salary(e.target.value)}/>
 
                 <input 
                 label="Employee age" 
                 className="age" 
-                value={newEmployee.age} 
-                onChange={e => Handle(e)}/>
+                value={employee_age} 
+                onChange={e => setEmployee_age(e.target.value)}/>
 
                <button>Create</button>
             </form>
