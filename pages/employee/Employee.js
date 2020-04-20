@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography'
 import { Box } from '@material-ui/core';
 import Button from '@material-ui/core/Button'
 import Router from 'next/router'
-import EditIcon from '@material-ui/icons/Edit';
+
 import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -20,7 +20,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-
+import FormDialog from '../components/FormDialog'
 
 const useStyles = makeStyles( {
     table: {
@@ -42,6 +42,7 @@ export default function Employee(){
     const [employee_name, setEmployee_name] = useState("")
     const [employee_salary, setEmployee_salary] = useState("")
     const [employee_age, setEmployee_age] = useState("")
+    const [edit,setEdit] = useState(false)
      
 
     const handleDelete = (id) => {
@@ -59,16 +60,10 @@ export default function Employee(){
         
     };
 
-    //const handleClickOpenEdit = (id) => {
-     //   setOpen(false);
-        
-      //  axios.put(`http://dummy.restapiexample.com/api/v1/update/${id}`,{employee_name, employee_salary, employee_age})
-       // .then(res => {
-         //   console.log(res.data.data)
-            
-       //     setEmployeeList([...employeeList])
-      //  })
-  //  };
+    const handleEdit = () => {
+        setEdit(true)
+
+    }
         
     const handleClose = (e) => {
         setOpen(false);
@@ -86,6 +81,15 @@ export default function Employee(){
         
     };
 
+    const handleEditEmployee = (data) => {
+    console.log(data)
+            employeeList.map((each,index) =>{
+                if(each.id === data.id){
+                    employeeList[index] = data
+                    setEmployeeList([...employeeList])
+                }
+            })
+    }
     useEffect(() => {
         axios.get(`http://dummy.restapiexample.com/api/v1/employees`)
         .then(res => {
@@ -96,12 +100,12 @@ export default function Employee(){
         })
     }, [])
 
-    console.log(employeeList)
+    
 
     return(
         <div>
             <TableContainer component={Paper}>
-                        <Box className={classes.box}>
+                         <Box className={classes.box}>
                             <Typography variant="h6">
                                 Employee details
                             </Typography>
@@ -154,7 +158,10 @@ export default function Employee(){
                             </Dialog>
 
 
-                        </Box>
+                        </Box> 
+
+               
+
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                          
@@ -176,9 +183,9 @@ export default function Employee(){
                         <TableCell align="right">{eachEmployee.employee_salary}</TableCell>
                         <TableCell align="right">{eachEmployee.employee_age}</TableCell>
                         <TableCell align="right">
-                            <Box>
-                                <Button style={{color: 'yellow'}}  onClick={() => handleClickOpenEdit(eachEmployee.id)}><EditIcon/></Button>
-                                <Button style={{color: 'red'}} onClick={() => {handleDelete(eachEmployee.id)}}><DeleteIcon/></Button>
+                            <Box display={'flex'} justifyContent={'right'}>
+                                    <FormDialog eachEmployee = {eachEmployee} handleUpdate={handleEditEmployee}/>                           
+                                   <Button style={{color: 'red'}} onClick={() => {handleDelete(eachEmployee.id)}}><DeleteIcon/></Button>  
                             </Box>
                             
                         </TableCell>
