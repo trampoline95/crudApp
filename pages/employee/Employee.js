@@ -22,7 +22,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 
 
-
 const useStyles = makeStyles( {
     table: {
         minWidth: 650,
@@ -45,11 +44,11 @@ export default function Employee(){
     const [employee_age, setEmployee_age] = useState("")
      
 
-  
     const handleDelete = (id) => {
         axios.delete(`http://dummy.restapiexample.com/api/v1/delete/${id}`)
         .then(res => {
-            employeeList.splice(id, 1) 
+            const removeIndex = employeeList.map((item)=> { return item.id; }).indexOf(id);
+            employeeList.splice(removeIndex, 1);
             setEmployeeList([...employeeList])
             console.log(res.data.data)
     })
@@ -57,24 +56,33 @@ export default function Employee(){
     
      const handleClickOpen = () => {
         setOpen(true);
+        
     };
+
+    //const handleClickOpenEdit = (id) => {
+     //   setOpen(false);
+        
+      //  axios.put(`http://dummy.restapiexample.com/api/v1/update/${id}`,{employee_name, employee_salary, employee_age})
+       // .then(res => {
+         //   console.log(res.data.data)
+            
+       //     setEmployeeList([...employeeList])
+      //  })
+  //  };
         
     const handleClose = (e) => {
         setOpen(false);
         e.preventDefault();
-        axios.post(`http://dummy.restapiexample.com/api/v1/create`, {name: employee_name, salary: employee_salary, age: employee_age})
+
+        axios.post(`http://dummy.restapiexample.com/api/v1/create`, {name: employee_name, salary: employee_salary, age: employee_age })
         .then(res => {
             
             console.log(res.data.data)
-            const newEmployee = {employee_name: res.data.data.name, employee_salary: res.data.data.salary, employee_age: res.data.data.age, employee_id: res.data.data.id}
+            const newEmployee = {employee_name: res.data.data.name, employee_salary: res.data.data.salary, employee_age: res.data.data.age, id: res.data.data.id}
             employeeList.unshift(newEmployee)
             setEmployeeList([...employeeList])
         
         })
-
-        
-          
-        
         
     };
 
@@ -169,9 +177,10 @@ export default function Employee(){
                         <TableCell align="right">{eachEmployee.employee_age}</TableCell>
                         <TableCell align="right">
                             <Box>
-                                <Button style={{color: 'yellow'}} ><EditIcon/></Button>
+                                <Button style={{color: 'yellow'}}  onClick={() => handleClickOpenEdit(eachEmployee.id)}><EditIcon/></Button>
                                 <Button style={{color: 'red'}} onClick={() => {handleDelete(eachEmployee.id)}}><DeleteIcon/></Button>
                             </Box>
+                            
                         </TableCell>
                         </TableRow>
                     ))}
