@@ -26,7 +26,7 @@ export default function FormDialog({eachEmployee, handleUpdate}) {
 
     };
     const handleSubmit = () => {
-      const data = {employee_name: name, employee_salary: salary, employee_age: age}
+      const data = {employee_name: name, employee_salary: salary, employee_age: age, id: eachEmployee.id}
       axios.put(`http://dummy.restapiexample.com/api/v1/update/${eachEmployee.id}`,{data})
       .then(res => {
         console.log(res.data)
